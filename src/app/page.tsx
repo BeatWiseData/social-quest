@@ -7,7 +7,7 @@ import QuestGrid from '@/components/quest/QuestGrid'
 import QuestModal from '@/components/quest/QuestModal'
 import StatsSection from '@/components/sections/StatsSection'
 import Leaderboard from '@/components/sections/Leaderboard'
-import { quests, leaderboardData, userStats } from '@/data/mockData'
+import { quests } from '@/data/mockData'
 import { Quest } from '@/lib/types'
 
 export default function HomePage() {
@@ -44,8 +44,8 @@ export default function HomePage() {
           quests={quests} 
           onBeginQuest={handleBeginQuest}
         />
-        <StatsSection stats={userStats} />
-        <Leaderboard entries={leaderboardData} />
+        <StatsSection />
+        <Leaderboard />
       </main>
 
       <QuestModal

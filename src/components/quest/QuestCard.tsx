@@ -24,7 +24,7 @@ export const QuestCard: React.FC<QuestCardProps> = ({
       
       <div className="relative z-10">
         {/* Points Badge */}
-        <div className="inline-flex items-center gap-2 bg-white bg-opacity-80 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium mb-4">
+        <div className="inline-flex items-center gap-2 bg-white bg-opacity-80 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium mb-4 text-gray-800">
           <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
           {quest.points} Points + {quest.bonus}
         </div>

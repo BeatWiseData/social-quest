@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/Button'
 interface TapGameProps {
   onClose: () => void
   onGameComplete?: (score: number) => void
+  userHighScore?: number
 }
 
-export const TapGame: React.FC<TapGameProps> = ({ onClose, onGameComplete }) => {
+export const TapGame: React.FC<TapGameProps> = ({ onClose, onGameComplete, userHighScore = 0 }) => {
   const [score, setScore] = useState(0)
   const [timeLeft, setTimeLeft] = useState(30)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [highScore, setHighScore] = useState(0)
+  const [highScore, setHighScore] = useState(userHighScore)
   const scoreRef = useRef(0)
   const hasCompletedRef = useRef(false)
 
@@ -75,7 +76,7 @@ export const TapGame: React.FC<TapGameProps> = ({ onClose, onGameComplete }) => 
           <p className="text-xl font-bold text-gray-900">{timeLeft}s</p>
         </div>
         <div className="bg-gray-100 rounded-lg p-3">
-          <p className="text-sm text-gray-600">Best</p>
+          <p className="text-sm text-gray-600">HighScore</p>
           <p className="text-xl font-bold text-gray-900">{highScore}</p>
         </div>
       </div>

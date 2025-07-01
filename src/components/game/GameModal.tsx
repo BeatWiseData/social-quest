@@ -4,6 +4,8 @@ import { TapGame } from './TapGame'
 import { updateUserStatsWithGamePoints } from '@/lib/utils'
 import { UserStats } from '@/lib/types'
 import { useAccount } from 'wagmi'
+import { useUserProfile } from '@/lib/hooks/useUserProfile'
+import { sendGamePoints } from '@/lib/api'
 
 interface GameModalProps {
   isOpen: boolean
@@ -19,10 +21,11 @@ export const GameModal: React.FC<GameModalProps> = ({
   onStatsUpdate
 }) => {
   const { address } = useAccount()
+  const { profile } = useUserProfile()
   const [currentStats, setCurrentStats] = useState<UserStats>(
     userStats || {
       gamePoints: 0,
-      highScore: 0,
+      highScore: profile?.highScore || 0,
       socialPoints: 0,
       totalPoints: 0
     }
@@ -31,22 +34,7 @@ export const GameModal: React.FC<GameModalProps> = ({
 
   const sendGamePointsToServer = async (walletAddress: string, gamePoints: number) => {
     try {
-      const response = await fetch('http://localhost:5000/api/v1/game/points', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          walletAddress: walletAddress,
-          gamePoints: gamePoints
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const data = await response.json()
+      const data = await sendGamePoints(walletAddress, gamePoints)
       console.log('Game points sent to server:', data)
       return data
     } catch (error) {
@@ -67,7 +55,7 @@ export const GameModal: React.FC<GameModalProps> = ({
     try {
       // Convert game score to points (1 point per tap)
       const gamePointsEarned = score
-      
+
       // Send game points to server if wallet is connected
       if (address) {
         try {
@@ -80,7 +68,7 @@ export const GameModal: React.FC<GameModalProps> = ({
       } else {
         console.log('No wallet connected, skipping server update')
       }
-      
+
       // Update user stats with accumulated game points
       const updatedStats = updateUserStatsWithGamePoints(
         {
@@ -90,14 +78,14 @@ export const GameModal: React.FC<GameModalProps> = ({
         },
         gamePointsEarned
       )
-      
+
       setCurrentStats(updatedStats)
-      
+
       // Notify parent component of stats update
       if (onStatsUpdate) {
         onStatsUpdate(updatedStats)
       }
-      
+
       console.log(`Game completed! Earned ${gamePointsEarned} game points. Total game points: ${updatedStats.gamePoints}, High score: ${updatedStats.highScore}`)
     } finally {
       setIsSendingPoints(false)
@@ -110,7 +98,11 @@ export const GameModal: React.FC<GameModalProps> = ({
       onClose={onClose}
       title="Mini Game"
     >
-      <TapGame onClose={onClose} onGameComplete={handleGameComplete} />
+      <TapGame 
+        onClose={onClose} 
+        onGameComplete={handleGameComplete} 
+        userHighScore={profile?.highScore || 0}
+      />
     </Modal>
   )
 }

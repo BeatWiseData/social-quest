@@ -10,8 +10,10 @@ export interface Quest {
 export interface LeaderboardEntry {
   rank: number
   walletAddress: string
-  name: string
   totalPoints: number
+  gamePoints: number
+  referralPoints: number
+  socialPoints: number
 }
 
 export interface UserStats {

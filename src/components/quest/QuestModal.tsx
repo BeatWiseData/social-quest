@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { PlatformIcon } from '@/components/ui/PlatformIcon'
 import { WarningModal } from '@/components/ui/WarningModal'
 import { handleTwitterFollow, handleDiscordJoin, checkDiscordVerification } from '@/lib/utils'
-import { verifyQuestWithBackend } from '@/lib/api'
+import { verifyQuestWithBackend, verifyXTask } from '@/lib/api'
 import { useAccount } from 'wagmi'
 
 interface QuestModalProps {
@@ -109,21 +109,7 @@ export const QuestModal: React.FC<QuestModalProps> = ({
 
       // Handle X/Twitter quest verification
       if (quest.platform === 'twitter') {
-        const response = await fetch('http://localhost:5000/api/v1/quests/x-task', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            walletAddress: address
-          })
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
+        const data = await verifyXTask(address)
         result = {
           success: data.success || true,
           pointsAwarded: data.pointsAwarded || quest.points,

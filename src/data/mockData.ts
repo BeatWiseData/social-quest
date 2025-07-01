@@ -9,13 +9,6 @@ export const quests: Quest[] = [
     bonus: 1
   },
   {
-    id: '2',
-    platform: 'discord',
-    title: 'Join Discord',
-    points: 100,
-    bonus: 1
-  },
-  {
     id: '3',
     platform: 'telegram',
     title: 'Join Telegram',
@@ -28,26 +21,34 @@ export const leaderboardData: LeaderboardEntry[] = [
   {
     rank: 1,
     walletAddress: '0x8c8F24',
-    name: 'Ghost',
-    totalPoints: 42000
+    totalPoints: 42000,
+    gamePoints: 20000,
+    referralPoints: 10000,
+    socialPoints: 12000
   },
   {
     rank: 2,
     walletAddress: '0x8c8_4ed2',
-    name: 'PotatoM2',
-    totalPoints: 28000
+    totalPoints: 28000,
+    gamePoints: 15000,
+    referralPoints: 8000,
+    socialPoints: 5000
   },
   {
     rank: 3,
     walletAddress: '0x96c8dd8',
-    name: 'Jack',
-    totalPoints: 20000
+    totalPoints: 20000,
+    gamePoints: 12000,
+    referralPoints: 5000,
+    socialPoints: 3000
   },
   {
     rank: 4,
     walletAddress: '0x8c8_2d29',
-    name: 'Bruce7',
-    totalPoints: 15000
+    totalPoints: 15000,
+    gamePoints: 8000,
+    referralPoints: 4000,
+    socialPoints: 3000
   }
 ]
 
